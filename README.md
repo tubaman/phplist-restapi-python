@@ -1,5 +1,8 @@
 # Python library for PHPList REST API
 
+This is a python 3 library for interacting with the PHPList REST API.
+
+
 ## To Use
 
    1. `pip install -r requirements`
@@ -8,8 +11,8 @@
       ```python
       from phplist import PHPListClient
 
-      client = PHPListClient(URL, secret=mysecret)
-      client.login(login=myusername, password=mypassword)
+      client = PHPListClient("https://myphplistresturl", secret="mysecret")
+      client.login(login="myusername", password="mypassword")
       output = client.lists_get()
       ```
 
