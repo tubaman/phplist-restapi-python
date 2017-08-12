@@ -13,6 +13,12 @@
       output = client.lists_get()
       ```
 
+## Run Tests
+
+   1. `pip install nose`
+   2. `nosetests tests.py`
+
+
 ## TODO
 
    * add setup.py
