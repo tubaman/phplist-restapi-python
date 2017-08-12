@@ -3,6 +3,15 @@ import requests
 
 logger = logging.getLogger(__name__)
 
+
+class CommandNotFoundError(Exception):
+
+    def __init__(self, command):
+        self.command = command
+        message = "Command %s not found on server" % command
+        super(CommandNotFoundError, self).__init__(message)
+
+
 class PHPListClient:
 
     def __init__(self, url, secret=None):
@@ -29,12 +38,12 @@ class PHPListClient:
         r.raise_for_status()
         output = r.json()
         logger.debug("output: %r", output)
-        assert output['status'] == 'success'
+        if output['status'] != 'success':
+            if output['status'] == 'error':
+                if output['data']['message'] == 'No function for provided [cmd] found!':
+                    raise CommandNotFoundError(command)
+                else:
+                    raise ValueError(output['data']['message'])
+            else:
+                raise Exception("don't know how to handle: %r" % output)
         return output
-
-    def login(self, username, password):
-        params = {
-            'login': username,
-            'password': password,
-        }
-        return self.call_api('login', params)
