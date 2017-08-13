@@ -7,18 +7,15 @@ from os import path
 
 here = path.abspath(path.dirname(__file__))
 
-#with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-#    long_description = f.read()
-def read_md(filename):
-    import pypandoc
-    return pypandoc.convert('README.md', 'rst')
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
     name='phplist-client',
-    version='1.0.1',
+    version='1.0.2',
 
     description='Python client for the phplist REST API',
-    long_description=read_md('README.md'),
+    long_description=long_description,
 
     # The project's main homepage.
     url='https://github.com/tubaman/phplist-restapi-python',
@@ -40,8 +37,7 @@ setup(
     keywords='phplist rest client',
 
     py_modules=["phplist"],
-    install_requires=['requests', 'pypandoc'],
-    setup_requires=['pypandoc'],
+    install_requires=['requests'],
     extras_require={
         'dev': ['ipython'],
         'test': ['nose'],
